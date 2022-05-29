@@ -5,7 +5,7 @@ class Menu:
     def __init__(self):
         self.__prepare_terminal()
 
-    def __prepare_terminal(self):
+    def __prepare_terminal(self) -> None:
         os.system("color")
         self.width, self.height = os.get_terminal_size()
         self.header_height = 1
@@ -14,14 +14,17 @@ class Menu:
         print("\u001b[J", end="")
         self.__hide_cursor()
 
-    def __move_cursor(self, x: int = 1, y: int = 1):
+    def __move_cursor(self, x: int = 1, y: int = 1) -> None:
         print(f"\u001b[{y};{x}H", end="")
 
-    def __hide_cursor(self):
+    def __hide_cursor(self) -> None:
         print("\u001b[?25l", end="")
 
-    def __show_cursor(self):
+    def __show_cursor(self) -> None:
         print("\u001b[?25h", end="")
+
+    def __get_text_offset(self, total_width: int, text: str) -> int:
+        return total_width//2 - (len(text) // 2)
 
     def print_border(self):
         self.__move_cursor()
@@ -53,7 +56,7 @@ class Menu:
     def print_header(self, text: str):
         if len(text) % 2 != 1:
             text += " "
-        self.__move_cursor(self.width//2 - (len(text) // 2), self.header_height + 1)
+        self.__move_cursor(self.__get_text_offset(self.width, text), self.header_height + 1)
         print(text, end="")
         self.__move_cursor()
 
@@ -69,5 +72,4 @@ class Menu:
     def exit(self):
         self.__move_cursor(self.width, self.height)
         self.__show_cursor()
-        print("")
         
