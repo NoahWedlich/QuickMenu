@@ -68,4 +68,6 @@ class Menu:
 
     def exit(self):
         self.__move_cursor(self.width, self.height)
+        self.__show_cursor()
+        print("")
         
