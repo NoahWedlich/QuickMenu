@@ -65,4 +65,7 @@ class Menu:
         print(u"\u2566", end="")
         self.__move_cursor(self.width - self.navigation_width, self.height)
         print(u"\u2569", end="")
+
+    def exit(self):
+        self.__move_cursor(self.width, self.height)
         
