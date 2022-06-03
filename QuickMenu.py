@@ -24,7 +24,7 @@ class Menu:
         print("\u001b[?25h", end="")
 
     def __get_text_offset(self, total_width: int, text: str) -> int:
-        return total_width//2 - (len(text) // 2)
+        return min(total_width//2 + (len(text) // 2), total_width)
 
     def print_border(self):
         self.__move_cursor()
@@ -54,8 +54,6 @@ class Menu:
         self.__move_cursor()
 
     def print_header(self, text: str):
-        if len(text) % 2 != 1:
-            text += " "
         self.__move_cursor(self.__get_text_offset(self.width, text), self.header_height + 1)
         print(text, end="")
         self.__move_cursor()
@@ -68,6 +66,8 @@ class Menu:
         print(u"\u2566", end="")
         self.__move_cursor(self.width - self.navigation_width, self.height)
         print(u"\u2569", end="")
+        self.__move_cursor(self.width - self.__get_text_offset(self.navigation_width, "123456789123456789123456789"), self.header_height + 3)
+        print("123456789123456789123456789", end="")
 
     def exit(self):
         self.__move_cursor(self.width, self.height)
